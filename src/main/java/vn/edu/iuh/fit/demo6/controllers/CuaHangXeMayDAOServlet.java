@@ -96,9 +96,17 @@ public class CuaHangXeMayDAOServlet extends HttpServlet {
                         .hangXe(HangXe.builder().maHangXe(hangXe).build())
                         .build();
 
+
+
                 xeDAO.insert(xe, hangXe);
 
-                resp.sendRedirect(req.getContextPath() + "/cua-hang-xe-may");
+                req.setAttribute("message", "Sửa thành công");
+
+                List<Xe> xes = xeDAO.getAll();
+                req.setAttribute("xes", xes);
+
+                // Chuyển tiếp về trang cuahang.jsp
+                req.getRequestDispatcher("views/cuahang.jsp").forward(req, resp);
             }
         }
     }

@@ -70,14 +70,23 @@ public class XeDAOImpl implements XeDAO {
     }
 
     @Override
-    public List<Xe> getByTenXe(String tenXe) {
+    public List<Xe> getByTenXe(String input) {
         List<Xe> list = new ArrayList<Xe>();
 
         try {
             Connection connection = DBConnection.getConnection();
-            String sql = "SELECT * FROM Xe xe JOIN HangXe hx ON xe.MaHangXe = hx.MaHangXe Where TENXE LIKE ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, "%" + tenXe + "%");
+            PreparedStatement preparedStatement;
+            if(isNumber(input)) {
+                String sql = "SELECT * FROM Xe xe JOIN HangXe hx ON xe.MaHangXe = hx.MaHangXe WHERE GiaXe = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setDouble(1, Double.parseDouble(input));
+            } else {
+                String sql = "SELECT * FROM Xe xe JOIN HangXe hx ON xe.MaHangXe = hx.MaHangXe Where TENXE LIKE ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + input + "%");
+            }
+
+
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()){
@@ -130,5 +139,14 @@ public class XeDAOImpl implements XeDAO {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    private boolean isNumber(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

@@ -14,6 +14,13 @@
 </head>
 <body>
 <div style="width: 1000px; margin: auto;">
+
+    <c:if test="${not empty message}">
+        <div style="color: green; text-align: center; margin: 10px 0;">
+                ${message}
+        </div>
+    </c:if>
+
     <h1 style="text-align: center;">Cửa hàng xe máy ABC</h1>
 
     <div style="display: flex; justify-content: space-between;">
@@ -52,7 +59,7 @@
                 <td>${xe.namSanXuat}</td>
                 <td>${xe.hangXe.tenHang}</td>
                 <td>
-                    <a href="cua-hang-xe-may?action=edit&maXe=${xe.maXe}">....</a>
+                    <a href="cua-hang-xe-may?action=edit&maXe=${xe.maXe}" onclick="return confirm('Bạn có muốn sửa không');">....</a>
                 </td>
             </tr>
         </c:forEach>
