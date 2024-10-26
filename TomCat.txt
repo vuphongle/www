@@ -1,0 +1,51 @@
+TomCat
+- Tạo project:
+ + Template: WebApplication
+ + TomCat10 + phải đi với Jakarta EE 10 
+ + Gradle
+ + JDK: 17
+ + Servlet
+ + Weld SE
+- Chạy thử
+- Cấu hình:
+ + Dependnecy:
+    compileOnly('jakarta.servlet:jakarta.servlet-api:6.0.0')
+    implementation 'org.jboss.weld.servlet:weld-servlet-core:5.1.1.Final'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    //loombook
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.4.1'
+
+    // JSP
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:2.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
+
+ + Thêm ở build.gradle
+	war {
+    		duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	}
+
+ + Thêm class ConnectDB hoặc cấu hình context.xml
+ + Thêm vào file jsp:
+	<%@ page language="java" contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8" %>
+
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ + Tạo database +  thử insert xem kết nối được với mariadb chưa.
+ + Bean.xml nhớ thêm :
+	bean-discovery-mode="all"
+	và di chuyển vào WEB-INF
+
+		------------Xong chuẩn bị ---------------
+
+		------------Làm bài ---------------
+- Tạo database và table
+- Tạo entities
+- Tạo DAO và DAOImpl
+- Tạo view viết jsp thực hiện chức năng
+ + index.jsp
+	<%response.sendRedirect(request.getContextPath() + "/cua-hang-xe-may");%>	
